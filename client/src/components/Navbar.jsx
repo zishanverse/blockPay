@@ -38,7 +38,7 @@ const Navbar = ({ updateWallet, showConnectModal, wallet }) => {
           <div></div>
         </div>
         <div className="navbar__logo" href="/">
-          App Name
+          BlockPay
         </div>
       </div>
       <ul

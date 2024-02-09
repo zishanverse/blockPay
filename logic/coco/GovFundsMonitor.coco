@@ -1,0 +1,65 @@
+coco GovFundsMonitor
+
+state persistent:
+    allocations []Allocation
+
+
+class Allocation:
+    field allocationId U64          // Unique identifier for each allocation
+    field FundName String  // Name of the government entity responsible for the allocation
+    field amountAllocated U64      // Amount allocated by the government entity
+    field amountSpent U64          // Amount spent from the allocation
+    field purpose String           // Purpose of the allocation
+    field ended Bool               // Flag indicating whether the allocation period has ended
+
+////////////////////////
+// Mutate Endpoints
+///////////////////////
+
+// Note: "!" required as suffix for mutate endpoints
+
+// Create a new allocation
+endpoint invokable CreateAllocation!(FundName String, amountAllocated U64, purpose String, startDate U64, endDate U64, stateName String)->(CreatedAllocation Allocation):
+    if amountAllocated <= 0:
+        throw "Invalid Amount"
+
+    mutate allocations <- GovFundsMonitor.State.allocations:
+        var item = Allocation{allocationId: len(allocations), FundName: FundName, amountAllocated: amountAllocated, purpose: purpose, startDate: startDate, endDate:endDate}    
+        allocations = append(allocations, item)
+        yield CreatedAllocation item
+            
+    // Check if startDate is less than endDate
+    // Add new allocation to the list by incrementing the allocationId and appending to allocations array
+    // Yield the created allocation to the caller
+
+// Update amount spent for an allocation
+endpoint invokable UpdateAmountSpent!(allocationId U64, amountSpent U64):
+    var allocation Allocation
+    observe allocations <- GovFundsMonitor.State.allocations:
+        allocation = allocations[allocationId]
+
+    if allocations[allocation].ended == true:
+        throw "Allocation period ended"
+
+    mutate allocations <- GovFundsMonitor.State.allocations:   
+        allocations[allocationId].amountSpent += amountSpent
+
+
+    // Check if the allocation period has already ended
+    // Check if the allocation period has not ended yet
+    // Update ended flag to true
+
+////////////////////////
+// Observe Endpoints
+///////////////////////
+
+// Note: No "!" required as suffix for observe endpoints
+
+// Get all allocations
+endpoint invokable GetAllocations()->(allocations []Allocation):
+    observe allocations <- GovFundsMonitor.State.allocations:
+    // Observe allocations from the persistent state and yield
+
+
+endpoint invokable GetStateAllocations()->(allocations []Allocation):
+    observe allocations <- GovFundsMonitor.State.allocations:

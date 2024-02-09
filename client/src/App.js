@@ -32,8 +32,8 @@ function App() {
         updateWallet={updateWallet}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/faucet" element={<Faucet wallet={wallet} />} />
+        <Route exact path="/" wallet={wallet} element={<Home />} />
+        <Route exact path="/faucet" element={<Faucet wallet={wallet} />} />
       </Routes>
     </div>
   );

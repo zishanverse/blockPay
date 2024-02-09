@@ -16,15 +16,33 @@ const constructBaseWallet = async () => {
 // Base wallet should only be used for making read calls when user has not connected his wallet
 const baseWallet = await constructBaseWallet();
 
-////////////////////////
-// Mutate/Write Calls
-///////////////////////
+
+
+const CreateAllocation = async (wallet, inputAllocation) => {
+  const logicDriver = await getLogicDriver(logicId, wallet);
+  const ix = await logicDriver.routines.CreateAllocation(inputAllocation);
+  return ix.result();
+};
+
+const UpdateAmountSpent = async (wallet, id, spend) => {
+  const logicDriver = await getLogicDriver(logicId, wallet);
+  const ix = await logicDriver.routines.UpdateAmountSpent(id, spend);
+  return ix.result();
+};
+
+const GetAllocations = async (wallet, allocations) => {
+  const logicDriver = await getLogicDriver(logicId, wallet);
+  const ixResponse = await logicDriver.routines.GetAllocations(allocations);
+  return ixResponse.result();
+};
 
 const ClaimToken = async (wallet) => {
   const logicDriver = await getLogicDriver(logicId, wallet);
   const ixResponse = await logicDriver.routines.Claim();
   return ixResponse.wait();
 };
+
+
 
 ////////////////////////
 // Observe/Read Calls
@@ -63,6 +81,9 @@ const logic = {
   GetTokenDecimals,
   GetTokenSymbol,
   ClaimToken,
+  CreateAllocation,
+  UpdateAmountSpent,
+  GetAllocations,
 };
 
 export default logic;
