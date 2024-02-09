@@ -1,21 +1,44 @@
 import { Button, Card, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import logic from "../interface/logic";
+import { toastError } from "../utils/toastWrapper";
 
-const Faucet = () => {
+const Faucet = ({ wallet }) => {
   const [isLoading, setLoading] = useState(false);
   const [isClaiming, setClaiming] = useState(false);
   const [refillTime, setRefillTime] = useState("00:00:00");
   const [error, setError] = useState("");
   const [tokenName, setTokenName] = useState("");
+  const [claimAmount, setClaimAmount] = useState();
+  const [nextClaim, setNextClaim] = useState();
+  const [symbol, setSymbol] = useState();
+  const [decimals, setDecimals] = useState();
 
   useEffect(() => {
-    getTokenName();
+    getTokenDetails();
+    getClaimDetails();
   }, []);
 
-  const getTokenName = async () => {
+  const getTokenDetails = async () => {
     const { name } = await logic.GetTokenName();
+    const { symbol } = await logic.GetTokenSymbol();
+    const { decimals } = await logic.GetTokenDecimals();
+    const { userBalance } = await logic.GetTokenBalanceOf();
+
+    setSymbol(symbol);
+    setDecimals(decimals);
     setTokenName(name);
+  };
+
+  const getClaimDetails = async () => {
+    if (!wallet) return toastError("Please connect wallet");
+    const { claimAmount } = await logic.GetTokenClaimAmount(
+      wallet.getAddress()
+    );
+    const { nextClaim } = await logic.GetNextClaim(wallet.getAddress());
+
+    setClaimAmount(claimAmount);
+    setNextClaim(nextClaim);
   };
 
   const calculateRemainingTime = () => {
@@ -42,7 +65,7 @@ const Faucet = () => {
     return remainingTime;
   };
 
-  return (
+  return wallet ? (
     <div className="faucet">
       <Card classNames={"card"} type="primary" className=" ">
         <div className="">
@@ -53,7 +76,9 @@ const Faucet = () => {
                 <div className=""></div>
                 <div className="">
                   <div className="">Available Limit</div>
-                  <h1>10000 {tokenName}</h1>
+                  <h1>
+                    {claimAmount} {tokenName}
+                  </h1>
                 </div>
               </div>
               <div className="">
@@ -74,6 +99,8 @@ const Faucet = () => {
         </div>
       </Card>
     </div>
+  ) : (
+    <h2>Please Connect Wallet </h2>
   );
 };
 

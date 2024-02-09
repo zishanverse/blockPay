@@ -33,7 +33,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/faucet" element={<Faucet />} />
+        <Route path="/faucet" element={<Faucet wallet={wallet} />} />
       </Routes>
     </div>
   );

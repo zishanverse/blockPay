@@ -34,17 +34,17 @@ const GetTokenName = async () => {
   const logicDriver = await getLogicDriver(logicId, baseWallet);
   return logicDriver.routines.Name();
 };
-const GetTokenBalanceOf = async () => {
+const GetTokenBalanceOf = async (account) => {
   const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return logicDriver.routines.BalanceOf();
+  return logicDriver.routines.BalanceOf(account);
 };
 const GetTokenClaimAmount = async () => {
   const logicDriver = await getLogicDriver(logicId, baseWallet);
   return logicDriver.routines.ClaimAmount();
 };
-const GetTokenClaimInterval = async () => {
+const GetNextClaim = async (account) => {
   const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return logicDriver.routines.ClaimInterval();
+  return logicDriver.routines.NextClaim(account);
 };
 const GetTokenDecimals = async () => {
   const logicDriver = await getLogicDriver(logicId, baseWallet);
@@ -58,7 +58,7 @@ const GetTokenSymbol = async () => {
 const logic = {
   GetTokenName,
   GetTokenBalanceOf,
-  GetTokenClaimInterval,
+  GetNextClaim,
   GetTokenClaimAmount,
   GetTokenDecimals,
   GetTokenSymbol,
