@@ -30,9 +30,9 @@ const UpdateAmountSpent = async (wallet, id, spend) => {
   return ix.result();
 };
 
-const GetAllocations = async (wallet, allocations) => {
+const GetAllocations = async (wallet) => {
   const logicDriver = await getLogicDriver(logicId, wallet);
-  const ixResponse = await logicDriver.routines.GetAllocations(allocations);
+  const ixResponse = await logicDriver.routines.GetAllocations();
   return ixResponse.result();
 };
 

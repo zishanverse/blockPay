@@ -12,6 +12,7 @@ const Home = props => {
   const [list, setList] = useState([])
   const [fundId, setFundId] = useState("")
   const [error,setError] = useState(false)
+  const [getBtn,setGetBtn] = useState(false)
   const {wallet} = props
 
   const changeFundName = e => {
@@ -21,9 +22,8 @@ const Home = props => {
   const addToList = async e => {
     e.preventDefault();
     const item = {FundName,amountAllocated, amountSpent, purpose, ended}
-    
-    const resp = await logic.CreateAllocation(item);
-    setList(pre => [...pre, resp])
+    setGetBtn(true)
+    await logic.CreateAllocation(wallet, item);
   }
 
   const changeAmountAllocated = e => setAmountAllocated(e.target.value)
@@ -35,19 +35,17 @@ const Home = props => {
   const changeEnded = e => setEnded(e.target.value)
 
   const changeFund = async() => {
-    await logic.UpdateAmountSpent(fundId, updateFund);
+    const list = await logic.GetAllocations(wallet);
     setAmountSpent(pre => pre + updateFund)
+    setGetBtn(true)
     const found = list.find(each => each.id === fundId)
     if (found === undefined) {
       setError(true)
     }
     else {
       setError(false)
-      const item = {allocationId: fundId, FundName,amountAllocated, amountSpent, purpose, ended}
-      setList(pre => [...pre, item])
+      await logic.UpdateAmountSpent(wallet, fundId, updateFund);
     }
-    
-    
   }
 
   const updateAmount = e => setUpdateFund(e.target.value)
@@ -57,6 +55,12 @@ const Home = props => {
       setFundId(e.target.value)
     }
   }
+
+  const getList = async () => {
+    const list = await logic.GetAllocations();
+    setGetBtn(false)
+    setList(list)
+  } 
 
 
 
@@ -89,7 +93,7 @@ const Home = props => {
       </div>
 
       <div className="list-container">
-        <ul className="list">
+        {getBtn ? <button type="button" onClick={getList}>Get List</button> : <ul className="list">
           {list.map(each => <li key={each.id} className="form-container">
             <p className="item-details">id: {each.id}</p>
             <p className="item-details">Fund Name: {each.FundName}</p>
@@ -98,7 +102,8 @@ const Home = props => {
             <p className="item-details">Purpose: {each.purpose}</p>
             <p className="item-details">Ended: {each.ended}</p>
           </li>)}
-        </ul>
+        </ul>}
+        
       </div>
       </>
   )
