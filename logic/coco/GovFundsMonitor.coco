@@ -19,14 +19,14 @@ class Allocation:
 // Note: "!" required as suffix for mutate endpoints
 
 // Create a new allocation
-endpoint invokable CreateAllocation!(FundName String, amountAllocated U64, purpose String, startDate U64, endDate U64, stateName String)->(CreatedAllocation Allocation):
+endpoint invokable CreateAllocation!(FundName String, amountAllocated U64,amountSpent String, purpose String,endDate U64):
     if amountAllocated <= 0:
         throw "Invalid Amount"
 
     mutate allocations <- GovFundsMonitor.State.allocations:
         var item = Allocation{allocationId: len(allocations), FundName: FundName, amountAllocated: amountAllocated, purpose: purpose, startDate: startDate, endDate:endDate}    
         allocations = append(allocations, item)
-        yield CreatedAllocation item
+        // yield CreatedAllocation item
             
     // Check if startDate is less than endDate
     // Add new allocation to the list by incrementing the allocationId and appending to allocations array
@@ -60,6 +60,3 @@ endpoint invokable GetAllocations()->(allocations []Allocation):
     observe allocations <- GovFundsMonitor.State.allocations:
     // Observe allocations from the persistent state and yield
 
-
-endpoint invokable GetStateAllocations()->(allocations []Allocation):
-    observe allocations <- GovFundsMonitor.State.allocations:
