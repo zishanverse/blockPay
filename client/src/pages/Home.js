@@ -35,7 +35,7 @@ const Home = props => {
   const changeEnded = e => setEnded(e.target.value)
 
   const changeFund = async() => {
-    const list = await logic.GetAllocations(wallet);
+    const list = await logic.GetAllocations();
     setAmountSpent(pre => pre + updateFund)
     setGetBtn(true)
     const found = list.find(each => each.id === fundId)

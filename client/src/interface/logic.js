@@ -27,11 +27,11 @@ const CreateAllocation = async (wallet, inputAllocation) => {
 const UpdateAmountSpent = async (wallet, id, spend) => {
   const logicDriver = await getLogicDriver(logicId, wallet);
   const ix = await logicDriver.routines.UpdateAmountSpent(id, spend);
-  return ix.result();
+  return ix.wait();
 };
 
-const GetAllocations = async (wallet) => {
-  const logicDriver = await getLogicDriver(logicId, wallet);
+const GetAllocations = async () => {
+  const logicDriver = await getLogicDriver(logicId, baseWallet);
   const ixResponse = await logicDriver.routines.GetAllocations();
   return ixResponse.result();
 };
