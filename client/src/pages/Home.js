@@ -4,8 +4,8 @@ import './home.css'
 
 const Home = props => {
   const [FundName, setFundName] = useState("")
-  const [amountAllocated, setAmountAllocated] = useState(0)
-  const [amountSpent, setAmountSpent] = useState(0)
+  const [amountAllocated, setAmountAllocated] = useState("")
+  const [amountSpent, setAmountSpent] = useState("")
   const [purpose, setPurpose] = useState("")
   const [updateFund, setUpdateFund] = useState("")
   const [ended, setEnded] = useState(false)
@@ -21,14 +21,17 @@ const Home = props => {
 
   const addToList = async e => {
     e.preventDefault();
-    const item = {FundName,amountAllocated, amountSpent, purpose, ended}
-    setGetBtn(true)
-    await logic.CreateAllocation(wallet, item);
+    if (wallet) {
+      const item = {FundName,amountAllocated, amountSpent, purpose, ended}
+      setGetBtn(true)
+      await logic.CreateAllocation(wallet, item);
+    }
+    
   }
 
-  const changeAmountAllocated = e => setAmountAllocated(e.target.value)
+  const changeAmountAllocated = e => setAmountAllocated(parseInt(e.target.value))
 
-  const changeAmountSpent = e => setAmountSpent(e.target.value)
+  const changeAmountSpent = e => setAmountSpent(parseInt(e.target.value))
 
   const changePurpose = e => setPurpose(e.target.value)
 
@@ -36,7 +39,7 @@ const Home = props => {
 
   const changeFund = async() => {
     const {lists} = await logic.GetAllocations();
-    
+    console.log(lists)
     setAmountSpent(pre => pre + updateFund)
     setGetBtn(true)
     const found = lists.find(each => each.id === fundId)
@@ -49,17 +52,15 @@ const Home = props => {
     }
   }
 
-  const updateAmount = e => setUpdateFund(e.target.value)
+  const updateAmount = e => setUpdateFund(parseInt(e.target.value))
 
-  const changeFundId = e => {
-    if (e.target.value.isInteger()){
-      setFundId(e.target.value)
-    }
-  }
+  const changeFundId = e => setFundId(parseInt(e.target.value))
+  
 
   const getList = async () => {
     const {lists} = await logic.GetAllocations();
     setGetBtn(false)
+    console.log(lists)
     setList(lists)
   } 
 
@@ -88,7 +89,7 @@ const Home = props => {
       <div className="form-container">
         <h2>update amount Spend</h2>
         <input type="text" value={fundId} onChange={changeFundId} />
-        <input type="text" onChange={updateAmount}/>
+        <input type="text" value={updateFund} onChange={updateAmount}/>
         <button type="button" onClick={changeFund}>update</button>
         {error ? <p className="error">it should be number or item not found</p>: null}
       </div>

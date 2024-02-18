@@ -33,8 +33,8 @@ const UpdateAmountSpent = async (wallet, id, spend) => {
 
 const GetAllocations = async () => {
   const logicDriver = await getLogicDriver(logicId, baseWallet);
-  const ixResponse = await logicDriver.routines.GetAllocations();
-  return ixResponse.result();
+  return await logicDriver.routines.GetAllocations();
+   
 };
 
 const ClaimToken = async (wallet) => {

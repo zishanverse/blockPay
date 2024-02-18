@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { VoyageProvider, Wallet, LogicFactory } = require("js-moi-sdk");
-const Manifest = require("./coco/samplelogic.json");
+const Manifest = require("./coco/govfundsmonitor.json");
 
 // ------- Update with your Mnemonic ------------------ //
 const MNEMONIC = process.env.MNEMONIC;
