@@ -19,8 +19,9 @@ const baseWallet = await constructBaseWallet();
 
 
 const CreateAllocation = async (wallet, inputAllocation) => {
+  const {FundName,amountAllocated, amountSpent, purpose, ended} = inputAllocation
   const logicDriver = await getLogicDriver(logicId, wallet);
-  const ix = await logicDriver.routines.CreateAllocation(...inputAllocation);
+  const ix = await logicDriver.routines.CreateAllocation(FundName,amountAllocated, amountSpent, purpose, ended);
   return ix.wait();
 };
 

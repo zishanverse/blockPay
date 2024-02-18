@@ -12,7 +12,7 @@ const Home = props => {
   const [list, setList] = useState([])
   const [fundId, setFundId] = useState("")
   const [error,setError] = useState(false)
-  const [getBtn,setGetBtn] = useState(false)
+  const [getBtn,setGetBtn] = useState(true)
   const {wallet} = props
 
   const changeFundName = e => {
@@ -35,10 +35,11 @@ const Home = props => {
   const changeEnded = e => setEnded(e.target.value)
 
   const changeFund = async() => {
-    const list = await logic.GetAllocations();
+    const {lists} = await logic.GetAllocations();
+    
     setAmountSpent(pre => pre + updateFund)
     setGetBtn(true)
-    const found = list.find(each => each.id === fundId)
+    const found = lists.find(each => each.id === fundId)
     if (found === undefined) {
       setError(true)
     }
@@ -57,9 +58,9 @@ const Home = props => {
   }
 
   const getList = async () => {
-    const list = await logic.GetAllocations();
+    const {lists} = await logic.GetAllocations();
     setGetBtn(false)
-    setList(list)
+    setList(lists)
   } 
 
 
@@ -93,7 +94,7 @@ const Home = props => {
       </div>
 
       <div className="list-container">
-        {getBtn ? <button type="button" onClick={getList}>Get List</button> : <ul className="list">
+        {getBtn ?<div className='btn-card'> <button type="button" className='btn' onClick={getList}>Get List</button> </div> : <ul className="list">
           {list.map(each => <li key={each.id} className="form-container">
             <p className="item-details">id: {each.id}</p>
             <p className="item-details">Fund Name: {each.FundName}</p>

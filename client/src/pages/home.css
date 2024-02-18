@@ -54,3 +54,9 @@
       width: 90%;
     }
   }
+
+  .btn-card {
+    display: flex;
+    height: 30vh;
+    justify-content: center;
+  }
