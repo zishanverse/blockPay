@@ -16,74 +16,61 @@ const constructBaseWallet = async () => {
 // Base wallet should only be used for making read calls when user has not connected his wallet
 const baseWallet = await constructBaseWallet();
 
+///////////////////////
+// Mutate/Write Calls
+///////////////////////
 
+// Use ixResponse.result() when the endpoint returns something
+// Use ixResponse.wait() when the endpoint doesn't return anything
+// and you want to just wait until the ix is settled
 
-const CreateAllocation = async (wallet, inputAllocation) => {
-  const {FundName,amountAllocated, amountSpent, purpose, ended} = inputAllocation
+const CreateAllocations = async (
+  wallet,
+  allocationName,
+  purpose,
+  amountAllocated
+) => {
   const logicDriver = await getLogicDriver(logicId, wallet);
-  const ix = await logicDriver.routines.CreateAllocation(FundName,amountAllocated, amountSpent, purpose, ended);
-  return ix.wait();
+  const ixResponse = await logicDriver.routines.CreateAllocation(
+    allocationName,
+    purpose,
+    amountAllocated
+  );
+  await ixResponse.wait();
 };
 
-const UpdateAmountSpent = async (wallet, id, spend) => {
+const UpdateAmountSpent = async (wallet, allocationName, amountSpent) => {
   const logicDriver = await getLogicDriver(logicId, wallet);
-  const ix = await logicDriver.routines.UpdateAmountSpent(id, spend);
-  return ix.wait();
-};
-
-const GetAllocations = async () => {
-  const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return await logicDriver.routines.GetAllocations();
-   
-};
-
-const ClaimToken = async (wallet) => {
-  const logicDriver = await getLogicDriver(logicId, wallet);
-  const ixResponse = await logicDriver.routines.Claim();
+  const ixResponse = await logicDriver.routines.UpdateAmountSpent(
+    allocationName,
+    amountSpent
+  );
   return ixResponse.wait();
 };
 
+const AddComment = async (wallet, allocationName, comment) => {
+  const logicDriver = await getLogicDriver(logicId, wallet);
+  const ixResponse = await logicDriver.routines.AddComment(
+    allocationName,
+    comment
+  );
+  return ixResponse.wait();
+};
 
-
-////////////////////////
+///////////////////////
 // Observe/Read Calls
 ///////////////////////
 
-const GetTokenName = async () => {
+const GetAllocations = async () => {
   const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return logicDriver.routines.Name();
-};
-const GetTokenBalanceOf = async (account) => {
-  const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return logicDriver.routines.BalanceOf(account);
-};
-const GetTokenClaimAmount = async () => {
-  const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return logicDriver.routines.ClaimAmount();
-};
-const GetNextClaim = async (account) => {
-  const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return logicDriver.routines.NextClaim(account);
-};
-const GetTokenDecimals = async () => {
-  const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return logicDriver.routines.Decimals();
-};
-const GetTokenSymbol = async () => {
-  const logicDriver = await getLogicDriver(logicId, baseWallet);
-  return logicDriver.routines.Symbol();
+  const ix = await logicDriver.routines.GetAllocations();
+  return ix;
 };
 
 const logic = {
-  GetTokenName,
-  GetTokenBalanceOf,
-  GetNextClaim,
-  GetTokenClaimAmount,
-  GetTokenDecimals,
-  GetTokenSymbol,
-  ClaimToken,
-  CreateAllocation,
+  CreateAllocations,
   UpdateAmountSpent,
+  AddComment,
   GetAllocations,
 };
 

@@ -27,7 +27,7 @@ const deployLogic = async () => {
   const logic = new LogicFactory(Manifest, wallet);
 
   // Deploy the logic get ixResponse
-  const ixResponse = await logic.deploy("Init!", "JUST", "JS", 2, "1000");
+  const ixResponse = await logic.deploy("Init!", { fuelLimit: 10000 }); // 
 
   const ixReceipt = await ixResponse.wait();
 

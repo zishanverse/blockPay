@@ -1,0 +1,161 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+  .main-container {
+    padding: 20px;
+    min-height: 100vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px 0px 10px 2px #333;
+    background-image: url('https://www.heet.org.uk/wp-content/uploads/2016/06/gradient-background-26046-26731-hd-wallpapers.jpg.png');
+  }
+  .gov-logo {
+    border-radius: 10px;
+    margin: 20px;
+    width: 40%;
+  
+  }
+  
+  .form-container {
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .modal-close {
+      align-self: flex-end;
+    }
+    
+    h1 {
+      color: #ADD8E6;
+    }
+  
+  p {
+    color: #ADD8E6;
+  }
+  
+    /* Heading Styles */
+    h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    
+    /* Input Styles */
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    /* Button Styles */
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 30px;
+      
+    }
+  #aa{
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+    }
+    
+    /* Hover effect for the button */
+    button:hover {
+      background-color: #0056b3;
+    }
+   
+    /* Responsive Styles */
+    @media screen and (max-width: 600px) {
+      .form-container {
+        width: 90%;
+      }
+    }
+  
+    .btns {
+      display: flex;
+      justify-content: space-between
+    }
+    .btn-card {
+      display: flex;
+      height: 30vh;
+      justify-content: center;
+    }
+    .btn {
+      height: 30px;
+      width: 100px;
+      display: flex;
+      margin-top: 30px;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #ADD8E6;
+      box-shadow: 0px 0px 10px 2px #ADD8E6;
+      padding: 0px;
+      background-color: transparent;
+      font-size: 15px;
+      color: #ADD8E6;
+  }
+
+
+  
+  .connect-btn {
+      height: 39px;
+      width: 120px;
+      border: 1px solid #ADD8E6;
+      box-shadow: 0px 0px 10px 2px #ADD8E6;
+      padding: 0px;
+      background-color: transparent;
+      margin-top: 25px;
+      color: #ADD8E6;
+      font-weight: bold;
+  }
+    
+    .heading {
+      font-size: 35px;
+      text-align: center;
+      width: 100%;
+    }
+  
+  @media (max-width:575px) {
+    .heading {
+      font-size: 30px;
+    }
+    .head {
+      font-size: 26px;
+    }
+  }
+  
+    
+    .pre-allocations {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+  

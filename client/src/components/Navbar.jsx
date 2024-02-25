@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { truncateStr } from "../utils/truncateStr";
 import { Link } from "react-router-dom";
-
+import { truncateStr } from "../utils/truncateStr";
+import '../pages/styles/login.css';
 const Navbar = ({ updateWallet, showConnectModal, wallet }) => {
   const [toggleValue, setToggle] = useState(false);
-
   const navRef = useRef(null);
 
   const handleToggle = () => {
@@ -25,7 +24,7 @@ const Navbar = ({ updateWallet, showConnectModal, wallet }) => {
   }, [toggleValue]);
 
   return (
-    <nav className="navbar">
+    <nav className="navbar nav">
       <div className="nav__header">
         <div
           onClick={handleToggle}
@@ -37,8 +36,8 @@ const Navbar = ({ updateWallet, showConnectModal, wallet }) => {
           <div></div>
           <div></div>
         </div>
-        <div className="navbar__logo" href="/">
-          BlockPay
+        <div className="navbar__logo nav-text" href="/">
+          Gov Fund Manager
         </div>
       </div>
       <ul
@@ -47,18 +46,15 @@ const Navbar = ({ updateWallet, showConnectModal, wallet }) => {
           (toggleValue && "nav__links nav__links--expanded") || "nav__links"
         }
       >
-        <Link to={"/home"}>Home</Link>
-        <Link to={"/faucet"}>Claim Faucet</Link>
-        <a
-          href={"https://moi.technology"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Built on MOI
-        </a>
+        <Link to={"/home"}><p className="nav-text">Home</p></Link>
+        <Link to={"/create-allocation"}><p className="nav-text">Create Allocation</p></Link>
+        <Link to="/allocations" ><p className="nav-text">Allocations</p></Link>
         <button
-          className="connect-button"
-          onClick={wallet ? () => updateWallet() : () => showConnectModal(true)}
+          className="connect-btn wallet-btn"
+          onClick={wallet ? () => updateWallet() : () => {
+            showConnectModal(true)
+            //Cookies.remove("wallet")
+          }}
         >
           {wallet
             ? `Disconnect: ${wallet && truncateStr(wallet.getAddress(), 11)}`

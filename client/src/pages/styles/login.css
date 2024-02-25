@@ -1,0 +1,24 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+}
+
+.wallet-btn {
+    width: 135px;
+}
+
+.login-img {
+    width: 20vw;
+    
+}
+.nav-text {
+    color: #ADD8E6;
+    margin: 0px;
+}
+
+.nav {
+    margin-bottom: 0px;
+}

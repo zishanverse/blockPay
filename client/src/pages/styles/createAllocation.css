@@ -1,0 +1,19 @@
+.form-text {
+    color: #fff;
+}
+.form-input {
+    width: 50%;
+    box-shadow: 0px 0px 3px 0px #ADD8E6;
+}
+
+.form-container {
+    margin-top: 60px;
+    padding: 10px;
+    background-color: transparent;
+    backdrop-filter: blur(60px);
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
