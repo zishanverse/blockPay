@@ -1,6 +1,8 @@
 import React from 'react';
 
 const AppContext = React.createContext({
-    wallet: undefined
+    wallet: undefined,
+    isModalOpen: false,
+    setIsModalOpen: () => {}
 })
 export default AppContext;

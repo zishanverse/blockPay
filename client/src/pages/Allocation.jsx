@@ -3,19 +3,14 @@ import logic from "../interface/logic";
 import { toastInfo, toastSuccess, toastError } from "../utils/toastWrapper";
 import {useState, useEffect} from 'react';
 import Modal from 'react-modal';
-import {Navigate} from 'react-router-dom';
 import { truncateStr } from "../utils/truncateStr";
 import { bytesToHex } from "js-moi-sdk";
+import { FaRupeeSign } from "react-icons/fa";
 import {Circles, ColorRing} from 'react-loader-spinner';
 import AppContext from "../Context/context";
 import {useParams} from 'react-router-dom';
 import './styles/allocation.css';
-// This page opens to view individual allocation
 
-// People can view amount-spent and purpose
-// People can add immutable comments
-// Check if connected wallet is creator of allocation and only he can update
-// amount spent from this page
 const customStyles = {
     content: {
       padding: '10px',
@@ -91,27 +86,38 @@ const Allocation = () => {
     return (
       <AppContext.Consumer>
         {value => {
-          const {wallet} = value;
+          const {wallet, setIsModalOpen} = value;
           const changeFund = async () => {
-            try {
-              setLoadingBtn(true);
-                toastInfo("Adding Spend Amount...");
-                await logic.UpdateAmountSpent(wallet, name , amountSpent);
-                toastSuccess("Successfully Added");
-                setIsOpen(false);
-                setAmountSpent(0);
-                setLoadingBtn(false);
-              }
-              catch (error) {
-                closeModal();
-                setAmountSpent(0);
-                setLoadingBtn(false);
-                toastError(error.message);
-              }
+            if (wallet === undefined) {
+              setIsModalOpen(true);
+            }
+            else {
+              try {
+                setLoadingBtn(true);
+                  toastInfo("Adding Spend Amount...");
+                  await logic.UpdateAmountSpent(wallet, name , amountSpent);
+                  toastSuccess("Successfully Added");
+                  setIsOpen(false);
+                  setAmountSpent(0);
+                  setLoadingBtn(false);
+                  getData();
+                }
+                catch (error) {
+                  closeModal();
+                  setAmountSpent(0);
+                  setLoadingBtn(false);
+                  toastError(error.message);
+                }
+            }
+            
           };
     
           const AddComment = async () => {
-            try {
+            if (wallet === undefined) {
+              setIsModalOpen(true);
+            }
+            else {
+              try {
                 setLoadingBtn(true);
                 toastInfo("Adding Comment...");
                 await logic.AddComment(wallet, name , comment);
@@ -127,11 +133,10 @@ const Allocation = () => {
                 setLoadingBtn(false);
                 toastError(error.message);
               }
+            }
           }
 
-          if (wallet === undefined) {
-            return <Navigate replace to={"/connect"} />
-          }
+          
         
 
           return (
@@ -148,9 +153,9 @@ const Allocation = () => {
                   <div className="allocation-details-card">
                   <h1 className="head">Allocation Details</h1>
                   <p className="allocation-text">Name: {name}</p>
-            <p>Amount Allocated: {item.amountAllocated} Rupees</p>
+            <p>Amount Allocated: <span><FaRupeeSign /></span> {item.amountAllocated}</p>
             <div className="flex">
-            <p>Add to amount spent: {item.amountSpent} Rupees</p> <button onClick={openModal} className="btn update">Update</button>
+            <p>Add to amount spent: <span><FaRupeeSign /></span> {item.amountSpent}</p> <button onClick={openModal} className="btn update">Update</button>
             </div>
             <p>Purpose: {item.purpose}</p>
             <h2 className="head">Previous Comments</h2>

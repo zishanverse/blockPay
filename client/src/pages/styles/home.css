@@ -1,23 +1,69 @@
 .home-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     min-height: 80vh;
 }
+
+@media (max-width: 767px) {
+  .home-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    order: 1;
+  }
+  .gov-logo {
+    order: 0;
+  }
+} 
   .main-container {
     padding: 20px;
     min-height: 100vh;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     box-shadow: 0px 0px 10px 2px #333;
     background-image: url('https://www.heet.org.uk/wp-content/uploads/2016/06/gradient-background-26046-26731-hd-wallpapers.jpg.png');
   }
   .gov-logo {
     border-radius: 10px;
     margin: 20px;
-    width: 40%;
+    width: 30%;
+    box-shadow: 0px 0px 10px 1px #3f3f3f;
+    transition: 0.5s;
+  }
+
+  .gov-logo:hover {
+    width: 32%;
+    box-shadow: 0px 0px 20px 2px #3f3f3f;
+    
+  } 
+  .content {
+    font-size: 17px;
+  }
+
+  .home-head {
+    width: 100vh;
+  }
   
+  .home-content {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 55vw;
+  }
+  .heading {
+    font-size: 35px;
+    width: 100%;
+    transition: 0.5s;
+  }
+
+
+  .heading:hover {
+    -webkit-text-stroke: 1px #ADD8E6;
+    color: transparent;
+    margin-bottom: 10px;
+  }
+
+  .moi-text {
+    color: rgba(75, 23, 229, 0.99);
   }
   
   .form-container {
@@ -38,6 +84,7 @@
     h1 {
       color: #ADD8E6;
     }
+
   
   p {
     color: #ADD8E6;
@@ -133,22 +180,26 @@
       padding: 0px;
       background-color: transparent;
       margin-top: 25px;
-      color: #ADD8E6;
       font-weight: bold;
   }
     
-    .heading {
-      font-size: 35px;
-      text-align: center;
-      width: 100%;
-    }
+    
   
   @media (max-width:575px) {
     .heading {
-      font-size: 30px;
+      font-size: 26px;
     }
     .head {
       font-size: 26px;
+    }
+    .content {
+      font-size: 13px;
+    }
+    .gov-logo {
+      display: none;
+    }
+    .home-head {
+      width: 90vw;
     }
   }
   

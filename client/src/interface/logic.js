@@ -31,7 +31,7 @@ const CreateAllocations = async (
   amountAllocated
 ) => {
   const logicDriver = await getLogicDriver(logicId, wallet);
-  const ixResponse = await logicDriver.routines.CreateAllocation(
+  const ixResponse = await logicDriver.routines.CreateAllocations(
     allocationName,
     purpose,
     amountAllocated

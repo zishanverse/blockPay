@@ -1,11 +1,31 @@
 .allocation-item {
     padding: 20px;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(15px);
     border-radius: 10px;
     box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
     width: 30vw;
-    margin: 10px;
+    margin: 5px;
+    height: 50vh;
+    transition: 0.5s;
   }
+
+  .allocation-item:hover {
+    backdrop-filter: blur(25px);
+    box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 52vh;
+    padding: 18px;
+  }
+  .allocations-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+  }
+
+  
 
 @media (max-width: 676px) {
     .allocation-item {
@@ -73,17 +93,36 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    transition: 0.5s;
 }
+
+.comment-card:hover {
+    background-color: #00000070;
+    backdrop-filter: blur(30px);
+}
+
 .comment {
     margin: 0px;
-    
 }
+
+.head-allo {
+    font-size: 30px;
+    margin-bottom: 20px;
+    transition: 0.5s;
+  }
 
 .head {
     font-size: 30px;
     margin-bottom: 20px;
+    transition: 0.5s;
   }
+
+.head:hover {
+    -webkit-text-stroke: 1px #ADD8E6;
+    color: transparent;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
 
 .update {
     margin-left: 40px;
@@ -104,4 +143,9 @@ textarea {
 .flex {
   display: flex;
   align-items: center;
+}
+
+span {
+    margin-top: 5px;
+    font-size: 14px;
 }

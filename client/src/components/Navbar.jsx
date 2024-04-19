@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { truncateStr } from "../utils/truncateStr";
+import { TiThMenuOutline } from "react-icons/ti";
+import { IoClose } from "react-icons/io5";
 import '../pages/styles/login.css';
 const Navbar = ({ updateWallet, showConnectModal, wallet }) => {
   const [toggleValue, setToggle] = useState(false);
@@ -24,35 +26,29 @@ const Navbar = ({ updateWallet, showConnectModal, wallet }) => {
   }, [toggleValue]);
 
   return (
-    <nav className="navbar nav">
-      <div className="nav__header">
+    <nav className={toggleValue ? 'navbar nav' : 'navbar nav nav-container'}>
+      <div className="nav__header flex">
         <div
-          onClick={handleToggle}
-          className={
-            (toggleValue && "nav__burger nav__burger--close") || "nav__burger"
-          }
-        >
-          <div></div>
-          <div></div>
-          <div></div>
+          onClick={handleToggle}>
+          {toggleValue ? <IoClose className="closeAndMenu"/> : <TiThMenuOutline className="closeAndMenu"/>}
         </div>
         <div className="navbar__logo nav-text" href="/">
-          Gov Fund Manager
+          <Link to="/" ><img className="logo" src="https://res.cloudinary.com/deepcnbrz/image/upload/v1709459198/WhatsApp_Image_2024-03-03_at_13.57.47_ismhga.jpg" alt="logo" /></Link>
         </div>
       </div>
       <ul
         ref={navRef}
         className={
-          (toggleValue && "nav__links nav__links--expanded") || "nav__links"
+          (toggleValue && "nav__links nav__links--expanded nav-container nav-links") || "nav__links"
         }
       >
-        <Link to={"/home"}><p className="nav-text">Home</p></Link>
-        <Link to={"/create-allocation"}><p className="nav-text">Create Allocation</p></Link>
+        <Link to="/"><p className="nav-text">Home</p></Link>
+        <Link to="/add-allocation"><p className="nav-text">Add Allocation</p></Link>
         <Link to="/allocations" ><p className="nav-text">Allocations</p></Link>
         <button
           className="connect-btn wallet-btn"
           onClick={wallet ? () => updateWallet() : () => {
-            showConnectModal(true)
+            showConnectModal(true);
             //Cookies.remove("wallet")
           }}
         >

@@ -126,12 +126,12 @@ button {
 }
 
 .btn--blue {
-  background-color: #2563eb; /* Green color, you can change this */
+  background-color: rgba(75, 23, 229, 0.99); /* Green color, you can change this */
   color: #fff; /* White text, you can change this */
 }
 
 .btn--blue:hover {
-  background-color: #1d4ed8; /* Darker green color on hover, you can change this */
+  background-color: rgba(75, 23, 229, 0.99); /* Darker green color on hover, you can change this */
 }
 
 img {
@@ -302,7 +302,7 @@ header {
 }
 
 .navbar .connect-button:hover {
-  background-color: #1d4ed8; /* Darker green color on hover, you can change this */
+  background-color: rgba(75, 23, 229, 0.99);; /* Darker green color on hover, you can change this */
 }
 
 @media screen and (max-width: 900px) {

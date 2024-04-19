@@ -7,7 +7,6 @@ import Navbar from "./components/Navbar";
 import { useState } from "react";
 import { Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
 import CreateAllocation from './pages/CreateAllocation';
 import Allocations from './pages/Allocations';
 import Allocation from './pages/Allocation';
@@ -29,6 +28,7 @@ const App = () => {
   };
 
   return (
+    <AppContext.Provider value={({wallet: wallet, isModalOpen, setIsModalOpen: showConnectModal})}>
     <div className="main-container">
       <Navbar
         updateWallet={updateWallet}
@@ -37,22 +37,19 @@ const App = () => {
       />
       <Toaster />
       <ConnectModal
-        isModalOpen={isModalOpen}
-        showConnectModal={showConnectModal}
         updateWallet={updateWallet}
       />
-      <AppContext.Provider value={({wallet: wallet})}>
+      
       <Routes>
-        <Route exact path="/connect" element={<Login />} />
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/create-allocation" element={<CreateAllocation />} />
+        <Route exact path="/add-allocation" element={<CreateAllocation />} />
         <Route exact path="/allocations" element={<Allocations />} />
         <Route exact path="/allocations/:name" element={<Allocation />} />
-        <Route exact path="/bad-path" element={<NotFound />} />
-        <Route exact path="*" element={<Login />} />
+        <Route exact path="/" element={<Home />} />
       </Routes>
+      </div>
     </AppContext.Provider>
-    </div>
+    
   );
 }
 

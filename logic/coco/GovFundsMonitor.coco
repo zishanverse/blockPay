@@ -44,10 +44,10 @@ endpoint invokable UpdateAmountSpent!(allocationName String, amountSpent U64):
     mutate allocations <- GovFundsMonitor.State.allocations:
         if (updater != allocations[allocationName].creator):
             throw "Not a creator of this allocation"
-        if ((allocations[allocationName].amountSpent + amountSpent) > (allocations[allocationName].amountAllocated)):
+        else if ((allocations[allocationName].amountSpent + amountSpent) > (allocations[allocationName].amountAllocated)):
             throw "Amount Spend exceed the amount allocated"
-        
-        allocations[allocationName].amountSpent += amountSpent
+        else:
+            allocations[allocationName].amountSpent += amountSpent
 
 endpoint invokable AddComment!(allocationName String, comment String):
     var commentator = Address(Sender)
